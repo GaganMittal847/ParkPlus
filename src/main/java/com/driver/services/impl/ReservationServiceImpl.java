@@ -30,7 +30,7 @@ public class ReservationServiceImpl implements ReservationService {
             Spot spot =null;
 
 
-            List<Spot> list = parkingLot.getSpot();
+            List<Spot> list = parkingLot.getSpotList();
 
             for(Spot spot1: list){
                 if(spot1.getOccupied()==true) continue;

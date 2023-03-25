@@ -9,7 +9,6 @@ import com.driver.services.ParkingLotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -47,7 +46,7 @@ public class ParkingLotServiceImpl implements ParkingLotService {
 
         spot.setParkingLot(parkingLot);
 
-        parkingLot.getSpot().add(spot);
+        parkingLot.getSpotList().add(spot);
 
         parkingLotRepository1.save(parkingLot);
 
@@ -59,7 +58,7 @@ public class ParkingLotServiceImpl implements ParkingLotService {
     public void deleteSpot(int spotId) {
         Spot spot = spotRepository1.findById(spotId).get();
 
-        spot.getParkingLot().getSpot().remove(spot);
+        spot.getParkingLot().getSpotList().remove(spot);
 
         spotRepository1.delete(spot);
 
@@ -80,7 +79,7 @@ public class ParkingLotServiceImpl implements ParkingLotService {
     @Override
     public void deleteParkingLot(int parkingLotId) {
         ParkingLot parkingLot = parkingLotRepository1.findById(parkingLotId).get();
-        List<Spot> list = parkingLot.getSpot();
+        List<Spot> list = parkingLot.getSpotList();
         for(Spot spot : list){
             spotRepository1.delete(spot);
         }
