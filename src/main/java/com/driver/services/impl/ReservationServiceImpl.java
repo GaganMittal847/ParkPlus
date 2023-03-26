@@ -44,13 +44,13 @@ public class ReservationServiceImpl implements ReservationService {
 
             for(Spot spot1: list){
                 if(spot1.getOccupied()==true) continue;
-                if(2>=numberOfWheels && spot==null || spot1.getPricePerHour() < spot.getPricePerHour()){
+                if(numberOfWheels<=2 && spot==null || spot1.getPricePerHour() < spot.getPricePerHour()){
                     spot = spot1;
                 }
-                else if(4==numberOfWheels &&  spot1.getSpotType()!=SpotType.TWO_WHEELER && spot==null || spot1.getPricePerHour() < spot.getPricePerHour() ){
+                else if(numberOfWheels==4 &&  spot1.getSpotType()!=SpotType.TWO_WHEELER && spot==null || spot1.getPricePerHour() < spot.getPricePerHour() ){
                     spot = spot1;
                 }
-                else if(4>numberOfWheels && spot1.getSpotType()!=SpotType.TWO_WHEELER && spot1.getSpotType()!=SpotType.FOUR_WHEELER && spot ==null ||
+                else if(numberOfWheels>4 && spot1.getSpotType()!=SpotType.TWO_WHEELER && spot1.getSpotType()!=SpotType.FOUR_WHEELER && spot ==null ||
                         spot1.getPricePerHour() < spot.getPricePerHour()) {
                     spot = spot1;
                 }
