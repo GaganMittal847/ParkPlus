@@ -48,8 +48,7 @@ public class Payment {
     public void setId(int id) {
         this.id = id;
     }
-
-    public Boolean getPaymentCompleted() {
+    public Boolean isPaymentCompleted() {
         return paymentCompleted;
     }
 
