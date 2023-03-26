@@ -11,6 +11,23 @@ public class Payment {
 
     Boolean paymentCompleted;
 
+    PaymentMode paymentMode;
+
+    public Payment(int id, Boolean paymentCompleted, PaymentMode paymentMode, Reservation reservation) {
+        this.id = id;
+        this.paymentCompleted = paymentCompleted;
+        this.paymentMode = paymentMode;
+        this.reservation = reservation;
+    }
+
+    public PaymentMode getPaymentMode() {
+        return paymentMode;
+    }
+
+    public void setPaymentMode(PaymentMode paymentMode) {
+        this.paymentMode = paymentMode;
+    }
+
     @OneToOne
     @JoinColumn
     Reservation reservation;

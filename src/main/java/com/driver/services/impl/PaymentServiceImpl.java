@@ -19,28 +19,46 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public Payment pay(Integer reservationId, int amountSent, String mode) throws Exception {
         Reservation reservation = reservationRepository2.findById(reservationId).get();
-        int totalBill = 0;
+
 
         int resPrice = reservation.getSpot().getPricePerHour();
 
         int time = reservation.getNumberOfHours();
 
-        totalBill = resPrice*time;
+       int totalBill = resPrice*time;
+
+        if(totalBill>amountSent){
+            throw new Exception("Insufficient Amount");
+        }
 
         Payment payment = new Payment();
 
-        payment.setReservation(reservation);
+        if(mode.equalsIgnoreCase(PaymentMode.CARD.toString())){
 
-        payment.setPaymentCompleted(true);
+            payment.setPaymentCompleted(true);
+            payment.setPaymentMode(PaymentMode.CARD);
+            payment.setReservation(reservation);
 
+        }
+        else if(mode.equalsIgnoreCase(PaymentMode.CASH.toString())){
+            payment.setPaymentCompleted(true);
+            payment.setPaymentMode(PaymentMode.CASH);
+            payment.setReservation(reservation);
+
+        }
+        else if(mode.equalsIgnoreCase(PaymentMode.UPI.toString())) {
+
+            payment.setPaymentCompleted(true);
+            payment.setPaymentMode(PaymentMode.UPI);
+            payment.setReservation(reservation);
+
+        }
+        else{
+            throw new Exception("Payment mode not detected");
+        }
         reservationRepository2.save(reservation);
 
         return payment;
-
-
-
-
-
 
     }
 }
