@@ -37,29 +37,33 @@ public class ReservationServiceImpl implements ReservationService {
         catch (Exception e){
             throw new Exception("Cannot make reservation");
         }
+        Reservation reservation = new Reservation();
             Spot spot =null;
 
 
             List<Spot> list = parkingLot.getSpotList();
+            int max = Integer.MAX_VALUE;
 
             for(Spot spot1: list){
                 if(spot1.getOccupied()==true) continue;
-                if(numberOfWheels<=2 && spot==null || spot1.getPricePerHour() < spot.getPricePerHour()){
+                if(numberOfWheels<=2 && spot==null || spot1.getPricePerHour() < max){
+                    max = spot1.getPricePerHour();
                     spot = spot1;
                 }
-                else if(numberOfWheels==4 &&  spot1.getSpotType()!=SpotType.TWO_WHEELER && spot==null || spot1.getPricePerHour() < spot.getPricePerHour() ){
+                else if(numberOfWheels==4 &&  spot1.getSpotType()!=SpotType.TWO_WHEELER && spot==null || spot1.getPricePerHour() < max ){
+                    max = spot1.getPricePerHour();
                     spot = spot1;
                 }
                 else if(numberOfWheels>4 && spot1.getSpotType()!=SpotType.TWO_WHEELER && spot1.getSpotType()!=SpotType.FOUR_WHEELER && spot ==null ||
-                        spot1.getPricePerHour() < spot.getPricePerHour()) {
-                    spot = spot1;
+                        spot1.getPricePerHour() < max) {
+                        max = spot1.getPricePerHour();
+                        spot = spot1;
                 }
             }
             if(spot == null){
                 throw new Exception("Cannot make reservation");
             }
             spot.setOccupied(true);
-            Reservation reservation = new Reservation();
             reservation.setNumberOfHours(timeInHours);
             reservation.setSpot(spot);
             reservation.setUser(user);
